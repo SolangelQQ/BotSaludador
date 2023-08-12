@@ -1,9 +1,19 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Bot saludador</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
     <body>
         <h1>Hola</h1>
         <form id="saludador-form">
-            <label for = "nombre-input">Ingrese su nombre</label>
-            <input id="nombre-input" type="text">
+            <img src="https://www.pngmart.com/files/21/Account-Avatar-Profile-PNG-Photo.png" alt="">
+            <input id="nombre-input" type="text" placeholder="Ingrese su nombre">
 
             <label for="genero-input">Genero</label>
             <select id="genero-input">
@@ -11,12 +21,11 @@
                 <option value="mujer">Mujer</option>
             </select>
 
-            <label for="edad-input">Edad</label>
-            <input id="edad-input" type="number">
+            <input id="edad-input" type="number" placeholder="Edad">
 
             <label for = "idioma-input">Idioma</label>
             <select id="idioma-input">
-                <option value="espaniol">Espanol</option>
+                <option value="espaniol">Español</option>
                 <option value="ingles">Ingles</option>
                 <option value="aleman">Aleman</option>
                 <option value="ruso">Ruso</option>
@@ -24,7 +33,7 @@
                 <option value="frances">Frances</option>
             </select>
 
-            <input type="submit" value="Saludar">
+            <button id="buttom">Saludar</button>
           </form>
         <script src ="./src/saludador.js"></script>
     </body>

@@ -117,47 +117,62 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"src/saludador.js":[function(require,module,exports) {
-var nombre = document.querySelector("#nombre-input");
-var form = document.querySelector("#saludador-form");
-var genero = document.querySelector("#genero-input");
-var edad = document.querySelector("#edad-input");
-var fecha = new Date();
-var idioma = document.querySelector("#idioma-input");
-function saludarSegunEdad(edad) {
-  return edad >= 11 && edad <= 25 ? "joven " : edad >= 26 ? "señor(a)" : " ";
-}
-function saludarSegunGenero(genero, tipo, idioma) {
-  var diccionario_joven = new Map([['espaniol', ['señorita ', 'joven ']], ['ingles', ['miss ', 'young ']], ['aleman', ['fräulein ', 'junge ']], ['ruso', ['Мисс ', 'молодой ']], ['chino', ['小姐 ', '年轻 ']], ['frances', ['mademoiselle ', 'jeune ']]]);
-  var diccionario_adulto = new Map([['espaniol', ['señora ', 'señor ']], ['ingles', ['madam ', 'mister ']], ['aleman', ['frau ', 'herr ']], ['ruso', ['Г-жа ', 'Г-н ']], ['chino', ['女士 ', '先生 ']], ['frances', ['Mme ', 'monsieur ']]]);
-  switch (tipo) {
-    case "joven ":
-      return genero == "mujer" ? diccionario_joven.get(idioma)[0] : diccionario_joven.get(idioma)[1];
-    case "señor(a)":
-      return genero == "mujer" ? diccionario_adulto.get(idioma)[0] : diccionario_adulto.get(idioma)[1];
+})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
   }
+  return bundleURL;
 }
-function saludarSegunHora(hora) {
-  return hora >= 4 && hora <= 12 ? "buen dia " : hora >= 13 && hora <= 18 ? "buenas tardes " : "buenas noches ";
-}
-function saludarSegunIdioma(idioma, horario) {
-  switch (horario) {
-    case "buen dia ":
-      return idioma == "espaniol" ? "Hola, buen dia " : idioma == "ingles" ? "Hello, good morning " : idioma == "aleman" ? "Hallo, guten Morgen " : idioma == "ruso" ? "здравствуйте, доброе утро " : idioma == "chino" ? "您好, 早上好 " : idioma == "frances" ? "Bonjour  " : "";
-    case "buenas tardes ":
-      return idioma == "espaniol" ? "Hola, buenas tardes " : idioma == "ingles" ? "Hello, good afternoon " : idioma == "aleman" ? "Hallo, guten Tag " : idioma == "ruso" ? "здравствуйте, Добрый день " : idioma == "chino" ? "您好,下午好 " : idioma == "frances" ? "Bonjour à tous  " : "";
-    case "buenas noches ":
-      return idioma == "espaniol" ? "Hola, buenas noches " : idioma == "ingles" ? "Hello, good night " : idioma == "aleman" ? "Hallo, guten Abend " : idioma == "ruso" ? "здравствуйте, добрый вечер " : idioma == "chino" ? "您好, 晚上好 " : idioma == "frances" ? "Bonne soirée  " : "";
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
   }
+  return '/';
 }
-form.addEventListener("submit", function (event) {
-  var saludarPorEdad = saludarSegunEdad(edad.value);
-  var saludarPorGenero = saludarSegunGenero(genero.value, saludarPorEdad, idioma.value);
-  var saludarPorHora = saludarSegunHora(fecha.getHours());
-  var saludarPorIdioma = saludarSegunIdioma(idioma.value, saludarPorHora);
-  alert(saludarPorIdioma + saludarPorGenero + nombre.value);
-});
-},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+function updateLink(link) {
+  var newLink = link.cloneNode();
+  newLink.onload = function () {
+    link.remove();
+  };
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+var cssTimeout = null;
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+    cssTimeout = null;
+  }, 50);
+}
+module.exports = reloadCSS;
+},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -326,5 +341,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/saludador.js"], null)
-//# sourceMappingURL=/saludador.547364e3.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/style.e308ff8e.js.map
