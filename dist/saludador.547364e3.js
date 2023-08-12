@@ -121,16 +121,21 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 var nombre = document.querySelector("#nombre-input");
 var form = document.querySelector("#saludador-form");
 var genero = document.querySelector("#genero-input");
-function saludarSegunGenero(genero) {
-  switch (genero) {
-    case "hombre":
-      return "Señor ";
-    case "mujer":
-      return "Señora ";
+var edad = document.querySelector("#edad-input");
+function saludarSegunEdad(edad) {
+  return edad >= 11 && edad <= 25 ? "joven " : edad >= 26 ? "señor(a)" : " ";
+}
+function saludarSegunGenero(genero, tipo) {
+  switch (tipo) {
+    case "joven ":
+      return genero == "mujer" ? "señorita " : "joven ";
+    case "señor(a)":
+      return genero == "mujer" ? "señora " : "señor ";
   }
 }
 form.addEventListener("submit", function (event) {
-  var saludarPorGenero = saludarSegunGenero(genero.value);
+  var saludarPorEdad = saludarSegunEdad(edad.value);
+  var saludarPorGenero = saludarSegunGenero(genero.value, saludarPorEdad);
   alert("Hola " + saludarPorGenero + nombre.value);
 });
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -158,7 +163,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50819" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50848" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
