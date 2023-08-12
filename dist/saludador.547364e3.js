@@ -123,25 +123,39 @@ var form = document.querySelector("#saludador-form");
 var genero = document.querySelector("#genero-input");
 var edad = document.querySelector("#edad-input");
 var fecha = new Date();
+var idioma = document.querySelector("#idioma-input");
 function saludarSegunEdad(edad) {
   return edad >= 11 && edad <= 25 ? "joven " : edad >= 26 ? "señor(a)" : " ";
 }
-function saludarSegunGenero(genero, tipo) {
+function saludarSegunGenero(genero, tipo, idioma) {
+  var diccionario_joven = new Map([['espaniol', ['señorita ', 'joven ']], ['ingles', ['miss ', 'young ']], ['aleman', ['fräulein ', 'junge ']], ['ruso', ['Мисс ', 'молодой ']], ['chino', ['小姐 ', '年轻 ']], ['frances', ['mademoiselle ', 'jeune ']]]);
+  var diccionario_adulto = new Map([['espaniol', ['señora ', 'señor ']], ['ingles', ['madam ', 'mister ']], ['aleman', ['frau ', 'herr ']], ['ruso', ['Г-жа ', 'Г-н ']], ['chino', ['女士 ', '先生 ']], ['frances', ['Mme ', 'monsieur ']]]);
   switch (tipo) {
     case "joven ":
-      return genero == "mujer" ? "señorita " : "joven ";
+      return genero == "mujer" ? diccionario_joven.get(idioma)[0] : diccionario_joven.get(idioma)[1];
     case "señor(a)":
-      return genero == "mujer" ? "señora " : "señor ";
+      return genero == "mujer" ? diccionario_adulto.get(idioma)[0] : diccionario_adulto.get(idioma)[1];
   }
 }
 function saludarSegunHora(hora) {
   return hora >= 4 && hora <= 12 ? "buen dia " : hora >= 13 && hora <= 18 ? "buenas tardes " : "buenas noches ";
 }
+function saludarSegunIdioma(idioma, horario) {
+  switch (horario) {
+    case "buen dia ":
+      return idioma == "espaniol" ? "Hola, buen dia " : idioma == "ingles" ? "Hello, good morning " : idioma == "aleman" ? "Hallo, guten Morgen " : idioma == "ruso" ? "здравствуйте, доброе утро " : idioma == "chino" ? "您好, 早上好 " : idioma == "frances" ? "Bonjour  " : "";
+    case "buenas tardes ":
+      return idioma == "espaniol" ? "Hola, buenas tardes " : idioma == "ingles" ? "Hello, good afternoon " : idioma == "aleman" ? "Hallo, guten Tag " : idioma == "ruso" ? "здравствуйте, Добрый день " : idioma == "chino" ? "您好,下午好 " : idioma == "frances" ? "Bonjour à tous  " : "";
+    case "buenas noches ":
+      return idioma == "espaniol" ? "Hola, buenas noches " : idioma == "ingles" ? "Hello, good night " : idioma == "aleman" ? "Hallo, guten Abend " : idioma == "ruso" ? "здравствуйте, добрый вечер " : idioma == "chino" ? "您好, 晚上好 " : idioma == "frances" ? "Bonne soirée  " : "";
+  }
+}
 form.addEventListener("submit", function (event) {
   var saludarPorEdad = saludarSegunEdad(edad.value);
-  var saludarPorGenero = saludarSegunGenero(genero.value, saludarPorEdad);
+  var saludarPorGenero = saludarSegunGenero(genero.value, saludarPorEdad, idioma.value);
   var saludarPorHora = saludarSegunHora(fecha.getHours());
-  alert("Hola " + saludarPorHora + saludarPorGenero + nombre.value);
+  var saludarPorIdioma = saludarSegunIdioma(idioma.value, saludarPorHora);
+  alert(saludarPorIdioma + saludarPorGenero + nombre.value);
 });
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -168,7 +182,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50873" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50908" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
